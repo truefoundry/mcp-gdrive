@@ -4,7 +4,8 @@ FROM node:20-alpine AS builder
 WORKDIR /app
 
 COPY package.json package-lock.json ./
-RUN npm ci
+# --ignore-scripts: avoid "prepare" running npm run build before source/tsconfig exist
+RUN npm ci --ignore-scripts
 
 COPY tsconfig.json ./
 COPY index.ts auth.ts ./
